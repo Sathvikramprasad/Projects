@@ -1,7 +1,7 @@
 CXXFLAGS += --std=c++17
 
-clock: main.o clock.o *.h
-	$(CXX) $(CXXFLAGS) main.o clock.o  -o clock
+main: main.o clock.o timer.o timer_expired.o *.h
+	$(CXX) $(CXXFLAGS) main.o clock.o timer.o timer_expired.o -o timer 
 
 main.o: main.cpp *.h
 	$(CXX) $(CXXFLAGS) -c main.cpp -o main.o
@@ -9,13 +9,12 @@ main.o: main.cpp *.h
 clock.o: clock.cpp *.h
 	$(CXX) $(CXXFLAGS) -c clock.cpp -o clock.o
 
-threaded: main_threaded.o clock.o *.h
-	$(CXX) $(CXXFLAGS) -pthread main_threaded.o clock.o  -o clock
+timer.o: timer.cpp *.h
+	$(CXX) $(CXXFLAGS) -c timer.cpp -o timer.o
 
-main_threaded.o: main_threaded.cpp *.h
-	$(CXX) $(CXXFLAGS) -c -pthread main_threaded.cpp -o main_threaded.o
-
+timer_expired.o: timer_expired.cpp *.h
+	$(CXX) $(CXXFLAGS) -c timer_expired.cpp -o timer_expired.o
 
 clean:
-	-rm -f *.o *.gch *~ a.out clock
+	-rm -f *.o *.gch *~ a.out clock timer
 
